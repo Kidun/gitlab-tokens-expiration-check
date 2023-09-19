@@ -1,5 +1,6 @@
-# gitlab-tokens-expiration-check
-Gitlab simple tool which grabs all groups' and projects' tokens and print them with expiration dates 
+# gitlab-tokens-expiration-chec
+
+Simple tool that grabs all groups' and projects' tokens from the specified Gitlab server and print their expiration dates 
 
 ## Install
 
