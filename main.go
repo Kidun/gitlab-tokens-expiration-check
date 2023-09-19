@@ -28,6 +28,7 @@ func main() {
 	}
 	gitlabToken := defToken
 	url := defURL
+	cnt := 0
 
 	if len(os.Args) > 2 {
 		gitlabToken = os.Args[1]
@@ -50,9 +51,12 @@ func main() {
 		}
 
 		for _, prj := range projects {
+			fmt.Printf("\r %d", cnt) //progress counter
+			cnt++
+
 			tokens, _, err := gitlabClient.ProjectAccessTokens.ListProjectAccessTokens(prj.ID, &gitlab.ListProjectAccessTokensOptions{Page: 1, PerPage: 20})
 			for _, token := range tokens {
-				log.Printf("Project #%d (%s): Token #%d (%s) expires %s", prj.ID, prj.Name, token.ID, token.Name, token.ExpiresAt.String())
+				fmt.Printf("\rProject #%d (%s): Token #%d (%s) expires %s\n", prj.ID, prj.Name, token.ID, token.Name, token.ExpiresAt.String())
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -75,9 +79,12 @@ func main() {
 		}
 
 		for _, group := range groups {
+			fmt.Printf("\r %d", cnt) //progress counter
+			cnt++
+
 			tokens, _, err := gitlabClient.GroupAccessTokens.ListGroupAccessTokens(group.ID, &gitlab.ListGroupAccessTokensOptions{Page: 1, PerPage: 20})
 			for _, token := range tokens {
-				log.Printf("Group #%d (%s): Token #%d (%s) expires %s", group.ID, group.Name, token.ID, token.Name, token.ExpiresAt.String())
+				fmt.Printf("\rGroup #%d (%s): Token #%d (%s) expires %s\n", group.ID, group.Name, token.ID, token.Name, token.ExpiresAt.String())
 				if err != nil {
 					log.Fatal(err)
 				}
